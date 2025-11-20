@@ -1,0 +1,17 @@
+USE healthcare_system;
+
+-- Backup
+CREATE TABLE IF NOT EXISTS PATIENT_BACKUP AS SELECT * FROM PATIENT;
+CREATE TABLE IF NOT EXISTS APPOINTMENT_BACKUP AS SELECT * FROM APPOINTMENT;
+
+-- Fix orphan appointments
+UPDATE APPOINTMENT
+SET patient_id = 15
+WHERE patient_id IN (1,2,3,4,5,7,8);
+
+-- Remove old demo patients
+DELETE FROM PATIENT WHERE user_id IS NULL;
+
+-- Verify
+SELECT COUNT(*) AS total_patients FROM PATIENT;
+SELECT COUNT(*) AS total_appointments FROM APPOINTMENT;
